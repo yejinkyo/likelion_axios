@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 const Container = styled.div`
   position: absolute;
@@ -41,12 +42,19 @@ const Btn = styled.div`
 `;
 
 const Modal = (props) => {
-  const { isClose } = props;
+  const { isClose, post } = props;
   const navigate = useNavigate();
 
   const handleDelete = () => {
     // 데이터 삭제 요청
-
+    axios
+      .delete(`/posts/${post.id}`)
+      .then(() => {
+        console.log("삭제 성공!!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // 홈 이동
     navigate("/");
   };

@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as S from "../styles/styledSend";
+import axios from "axios"; // 추가
 
 const Send = () => {
   const navigate = useNavigate();
@@ -29,6 +30,19 @@ const Send = () => {
   const handleSaveBtn = () => {
     console.log("제목: ", title);
     console.log("내용: ", content);
+    // 추가
+    try {
+      // HTTP POST 요청으로 새로운 게시물 생성
+      axios
+        .post("/posts", {
+          title: inputs.title,
+          content: inputs.content,
+        })
+        .then(() => navigate(`/`));
+    } catch (error) {
+      // 에러 발생 시 에러 처리
+      console.error("Error creating new post:", error);
+    }
   };
 
   return (
